@@ -18,6 +18,8 @@ import '../widgets/dart_code_view.dart';
 import '../docs/doc_example_catalog.dart';
 import 'doc_example_gallery.dart';
 import '../content/motion_api_topics.dart';
+import '../content/motion_guides.dart';
+import '../external_link.dart';
 
 import 'package:nib_motion/nib_motion.dart';
 
@@ -702,6 +704,27 @@ class _SpringExampleState extends State<SpringExample> {
               if (_hasLiveExample) const _TinyTag('Reduced-motion aware'),
             ],
           ),
+          if (widget.packageId == 'motion' &&
+              motionDocsSources.containsKey(widget.sectionId)) ...[
+            const SizedBox(height: 12),
+            Wrap(
+              spacing: 12,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: [
+                Text(
+                  'nib_motion $motionDocsVersion · $motionDocsChannel · ${motionDocsCommit.substring(0, 7)}',
+                  style: const TextStyle(color: Ember.muted, fontSize: 12),
+                ),
+                TextButton.icon(
+                  onPressed: () => openExternalLink(
+                    'https://github.com/oraclevs/nib_motion/edit/$motionDocsCommit/${motionDocsSources[widget.sectionId]}',
+                  ),
+                  icon: const Icon(Icons.edit_outlined, size: 14),
+                  label: const Text('Edit this page on GitHub'),
+                ),
+              ],
+            ),
+          ],
           if (medium) ...[
             const SizedBox(height: 20),
             ExpansionTile(

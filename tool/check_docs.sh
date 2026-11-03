@@ -4,6 +4,9 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 export FLUTTER_BIN="$(command -v flutter)"
 export FLUTTER_ROOT="$(dirname "$(dirname "$(realpath "$FLUTTER_BIN")")")"
+python3 tool/import_motion_docs.py --check
+python3 -m unittest discover -s tool -p 'test_import_motion_docs.py'
+python3 -m unittest discover -s tool -p 'test_prepare_docs_sync.py'
 flutter pub get
 (cd tool/api_reference && dart pub get)
 dart --packages=tool/api_reference/.dart_tool/package_config.json tool/generate_api_reference.dart --check

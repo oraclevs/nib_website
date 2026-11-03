@@ -11,15 +11,10 @@ The production website is the Flutter app in `WebsiteEmberLiving`, replacing the
 
 ## Rebuild
 
-Run from this directory. The local Nib dependencies in `pubspec.yaml` must be present. The installed build SDK for the October 28 deployment was Flutter 3.47.3 / Dart 3.13.3. The build script needs Python 3 and Pillow; Pillow is a build tool, not a website dependency.
+Run from this directory. The local Nib dependencies in `pubspec.yaml` must be present. The current build SDK is Flutter 3.47.8 / Dart 3.13.7. The build script needs Python 3 and Pillow; Pillow is a build tool, not a website dependency.
 
 ```bash
-flutter pub get
-flutter test --no-pub tool/export_site_content_test.dart
-flutter test --no-pub test/site_router_test.dart test/site_home_navigation_test.dart test/search
-flutter build web --wasm --release --no-pub
-python3 tool/build_seo.py --mode preview
-python3 tool/verify_seo.py
+tool/check_docs.sh
 vercel deploy --prebuilt --yes --scope team_uLkGKaENnuPQXup2m6SleSHd
 ```
 
@@ -72,3 +67,7 @@ vercel rollback dpl_6DES9YBHeZkX6LmZC6nUAozcdmWg --yes --scope team_uLkGKaENnuPQ
 ```
 
 This is a rollback recipe; it was not executed. Current deployment IDs and artifact hashes are recorded in `docs/evidence/2026-10-28-deploy/` and `docs/DEPLOYMENT_REPORT.md`.
+
+## Automated documentation delivery
+
+See [DOCS_SYNC.md](docs/DOCS_SYNC.md) for the single GitHub Actions workflow, canonical Markdown ownership, source locks and credential activation. The known-working production deployment above stays unchanged while sync previews are reviewed. Hosted deployment is prepared but credentials remain pending.

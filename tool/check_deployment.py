@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """HTTP smoke checks. Vercel authentication is used only for protected previews."""
-import argparse,concurrent.futures,hashlib,json,re,subprocess,tempfile
+import argparse,concurrent.futures,hashlib,json,os,re,subprocess,tempfile
 from pathlib import Path
 from urllib import request,error
 
 p=argparse.ArgumentParser();p.add_argument('origin');p.add_argument('--preview',action='store_true');args=p.parse_args()
-paths=['/','/docs/motion/springs','/playground/components/liquid-glass','/robots.txt','/sitemap.xml','/llms.txt','/llms-full.txt','/social/home.png','/main.dart.wasm','/does-not-exist-seo-check','/motion']
+paths=['/','/motion-docs-source.json','/docs/motion/springs','/playground/components/liquid-glass','/robots.txt','/sitemap.xml','/llms.txt','/llms-full.txt','/social/home.png','/main.dart.wasm','/does-not-exist-seo-check','/motion']
 manifest=json.loads((Path(__file__).resolve().parents[1]/'.vercel/output/nib-build-manifest.json').read_text())
 motion_routes=[route for route in manifest['routes'] if route.startswith('/docs/motion/')]
 paths=list(dict.fromkeys(paths+motion_routes+['/text'+route+'.md' for route in motion_routes]+[
@@ -28,7 +28,8 @@ def fetch(path):
     with tempfile.TemporaryDirectory(prefix='nib-http-') as temp:
         header=Path(temp)/'headers';body=Path(temp)/'body'
         flags=['--silent','--show-error','--retry','1','--max-time','45','--dump-header',str(header),'--output',str(body)]
-        command=(['vercel','curl',path,'--deployment',args.origin,'--']+flags) if args.preview else ['curl',url]+flags
+        token_flags=['--token',os.environ['VERCEL_TOKEN']] if os.environ.get('VERCEL_TOKEN') else []
+        command=(['vercel','curl',path,'--deployment',args.origin]+token_flags+['--']+flags) if args.preview else ['curl',url]+flags
         run=subprocess.run(command,capture_output=True,text=True)
         if run.returncode: return {'path':path,'error':'HTTP request failed','exit':run.returncode,'passed':False}
         raw=header.read_text();status=int(re.findall(r'HTTP/[^ ]+ (\d+)',raw)[-1]);headers={k.lower():v.strip() for k,v in re.findall(r'^([^:\n]+):([^\n]*)',raw,re.M)};data=body.read_bytes()
