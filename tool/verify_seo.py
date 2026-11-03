@@ -63,7 +63,7 @@ for route in manifest['routes']:
         if article['packageId']=='motion':
             check(provenance['commit'] in text,route+': missing documentation SHA')
             check('nib_motion '+provenance['package_version'] in text,route+': missing package version')
-            check('https://github.com/oraclevs/nib_motion/edit/'+provenance['commit']+'/'+article['source'] in parsed.links,route+': missing edit link')
+            check('https://github.com/oraclevs/nib_motion/edit/'+provenance['edit_ref']+'/'+article['source'] in parsed.links,route+': missing edit link')
         for section in article['sections']:
             for paragraph in section['paragraphs']:
                 check(paragraph in text,route+': missing source paragraph')

@@ -74,7 +74,7 @@ def main():
     contract = json.loads((ROOT / 'tool/motion_release_contract.json').read_text())
     errors = content_errors(data, reference)
     provenance = json.loads((ROOT / 'tool/motion_docs.lock.json').read_text())
-    expected_source = {'commit': provenance['commit'], 'version': provenance['package_version'], 'channel': provenance['channel']}
+    expected_source = {'commit': provenance['commit'], 'version': provenance['package_version'], 'channel': provenance['channel'], 'edit_ref': provenance['edit_ref']}
     if data.get('motionDocsSource') != expected_source:
         errors.append('Exported documentation source differs from the canonical lock')
     mappings = json.loads((ROOT / 'tool/motion_docs_routes.json').read_text())['guides']

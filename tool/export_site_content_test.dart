@@ -60,6 +60,7 @@ void main() {
         'commit': motionDocsCommit,
         'version': motionDocsVersion,
         'channel': motionDocsChannel,
+        'edit_ref': motionDocsEditRef,
       },
       'motionCapabilities': motionCapabilities.map(section).toList(),
       'motionApiTopics': motionApiTopics,

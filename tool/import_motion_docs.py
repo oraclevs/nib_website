@@ -18,6 +18,7 @@ GENERATED = ROOT / 'lib/content/motion_guides.dart'
 LOCK = ROOT / 'tool/motion_docs.lock.json'
 PROVENANCE = ROOT / 'assets/reference/motion_docs_source.json'
 SHA = re.compile(r'[0-9a-f]{40}')
+EDIT_REF = re.compile(r'[A-Za-z0-9][A-Za-z0-9._/-]{0,150}')
 
 
 def require(condition, message):
@@ -70,12 +71,18 @@ def parse_markdown(text):
         require(lines and lines[0].startswith('## '), 'Section must start with a level-two heading')
         section = {'id': chunks[index], 'heading': lines[0][3:], 'paragraphs': [],
                    'code': None, 'note': None, 'api': [], 'blocks': []}
-        i, api_next = 1, False
+        i, api_next, previous_rank = 1, False, 0
         while i < len(lines):
             line = lines[i]
             if not line:
                 i += 1
                 continue
+            require(not line.startswith(('#', '<')) or line == '<!-- api -->', 'Unsupported Markdown block: ' + line[:60])
+            rank = (2 if line == '<!-- api -->' or api_next else
+                    3 if line.startswith('```') else 4 if line.startswith('> ') else
+                    1 if line.startswith(('|', '[')) or re.match(r'(?:- |\d+\. )', line) else 0)
+            require(rank >= previous_rank, 'Section block order must be paragraphs, lists/tables/links, API table, code, note')
+            previous_rank = rank
             if line == '<!-- api -->':
                 require(not section['api'], 'Duplicate API table')
                 api_next = True
@@ -157,6 +164,7 @@ def render(articles, source):
              f'const motionDocsVersion = {dart(source["package_version"])};',
              f'const motionDocsCommit = {dart(source["commit"])};',
              f'const motionDocsChannel = {dart(source["channel"])};',
+             f'const motionDocsEditRef = {dart(source["edit_ref"])};',
              'const motionDocsSources = <String, String>{']
     lines += [f'{dart(a["id"])}: {dart(a["source"])},' for a in articles]
     lines += ['};', 'const detailedMotionGuides = <DocArticle>[']
@@ -227,6 +235,8 @@ def run(args):
     lock = json.loads(LOCK.read_text()) if LOCK.exists() else {}
     sha = args.commit or lock.get('commit', '')
     require(SHA.fullmatch(sha), 'Use --commit with an immutable 40-character SHA')
+    edit_ref = args.edit_ref or lock.get('edit_ref', 'main')
+    require(EDIT_REF.fullmatch(edit_ref) and '..' not in edit_ref and not SHA.fullmatch(edit_ref), 'Edit ref must be an editable branch name')
     contract = json.loads((ROOT / 'tool/motion_release_contract.json').read_text())
     with tempfile.TemporaryDirectory(prefix='nib-docs-') as temporary:
         repo = args.source_repo or temporary
@@ -234,6 +244,7 @@ def run(args):
             subprocess.run(['git', 'init', '-q', repo], check=True)
             subprocess.run(['git', '-C', repo, 'fetch', '-q', '--depth=1', 'https://github.com/oraclevs/nib_motion.git', sha], check=True)
         articles, provenance = import_source(repo, sha, routes, contract)
+        provenance['edit_ref'] = edit_ref
         raw = Path(temporary) / 'motion_guides.dart'
         raw.write_text(render(articles, provenance))
         subprocess.run([args.dart, 'format', str(raw)], check=True, stdout=subprocess.DEVNULL)
@@ -254,6 +265,7 @@ if __name__ == '__main__':
     parser.add_argument('--commit')
     parser.add_argument('--source-repo', type=Path)
     parser.add_argument('--dart', default='dart')
+    parser.add_argument('--edit-ref', help='Authoring branch; source content remains pinned to the commit')
     parser.add_argument('--check', action='store_true')
     try:
         run(parser.parse_args())

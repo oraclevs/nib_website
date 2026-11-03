@@ -26,10 +26,10 @@ The importer accepts the bounded format documented in the package's
 `doc/maintainers/documentation-sync.md`: paragraphs, stable heading anchors,
 fenced code, notes, lists, tables and links. It does not execute Markdown,
 HTML, JSX or code from the documentation repository. Unsupported block syntax,
-missing mappings, version mismatches and generated drift fail the build.
+missing mappings, version mismatches and generated drift fail the build. Sections follow paragraphs, lists/tables/links, API table, code, then note; out-of-order blocks are rejected.
 
 Every Motion page displays its package version, channel and source SHA, with
-an **Edit this page on GitHub** link. `/motion-docs-source.json` contains the
+an **Edit this page on GitHub** link. The editable branch is recorded separately from the immutable source SHA. Preview builds can use `--edit-ref` (or the workflow input) for a candidate branch; production always uses `main`. `/motion-docs-source.json` contains the
 full SHA and individual source hashes. Search uses the generated guide bodies.
 
 ## Version policy
@@ -52,7 +52,7 @@ pass before enabling that version in production.
 
 - Every pull request runs public importer tests and checks generated drift. It
   receives no private dependency or deployment secrets.
-- A trusted manual run can import a specific full SHA for preview. An empty
+- A trusted manual run can import a reviewed full SHA for preview. Never pass an unreviewed pull-request SHA: consumer tests execute selected Dart snippets in the private build workspace, although the importer itself reads only data. An empty
   `source_commit` resolves canonical `main` once and imports that immutable SHA.
 - After activation, a twice-hourly schedule compares canonical content hashes
   with the production provenance before building. Unrelated source commits

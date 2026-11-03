@@ -18,22 +18,23 @@ A bounded surface.
 
 Keep controls readable.
 
+1. Tap.
+  - Observe.
+2. Reset.
+
+[Water](water.md#example)
+<!-- api -->
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| value | String \\| null | null | A value. |
+
 ```dart
 const label = '$value';
 ```
 
 > Sample only the supplied background.
 
-<!-- api -->
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| value | String \\| null | null | A value. |
 
-1. Tap.
-  - Observe.
-2. Reset.
-
-[Water](water.md#example)
 '''
 
 
@@ -49,6 +50,10 @@ class ImportTest(unittest.TestCase):
     def test_unsupported_syntax_fails(self):
         with self.assertRaisesRegex(ValueError, 'Unsupported Markdown'):
             parse_markdown(GUIDE + '\n<script>bad()</script>\n')
+
+    def test_paragraph_after_code_is_rejected_instead_of_reordered(self):
+        with self.assertRaisesRegex(ValueError, 'Section block order'):
+            parse_markdown(GUIDE.replace('\n> Sample', '\nAfter the code.\n\n> Sample'))
 
     def test_unclosed_fence_fails(self):
         with self.assertRaisesRegex(ValueError, 'Unclosed code fence'):
@@ -74,6 +79,7 @@ class ImportTest(unittest.TestCase):
             self.assertEqual(articles[0]['sections'][0]['blocks'][1]['route'], '/docs/motion/water#example')
             self.assertEqual(source['commit'], 'b' * 40)
             self.assertEqual(len(source['files']), 2)
+            source['edit_ref'] = 'main'
             self.assertIn(r'\$value', render(articles, source))
             with self.assertRaisesRegex(ValueError, 'version differs'):
                 import_source('.', 'b' * 40, routes, {'version': '0.3.6', 'commit': 'a' * 40})

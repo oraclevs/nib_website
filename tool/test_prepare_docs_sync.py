@@ -1,6 +1,7 @@
 import unittest
 from unittest.mock import patch
 from argparse import Namespace
+from urllib.error import HTTPError
 from prepare_docs_sync import needs_build, run
 
 
@@ -20,3 +21,9 @@ class SyncTest(unittest.TestCase):
     def test_non_sha_input_rejected(self):
         with self.assertRaisesRegex(ValueError, 'full documentation commit'):
             run(Namespace(commit='main; command', production=False, scheduled=False))
+
+    def test_main_without_manifest_waits_for_integration(self):
+        missing = HTTPError('https://raw.githubusercontent.com', 404, 'Not Found', None, None)
+        self.addCleanup(missing.close)
+        with patch('prepare_docs_sync.read_json', side_effect=[{'sha': 'a' * 40}, missing]):
+            self.assertEqual(run(Namespace(commit=None, production=False, scheduled=False))['changed'], 'false')

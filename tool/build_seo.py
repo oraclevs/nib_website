@@ -49,10 +49,10 @@ def sections(values):
                 result += table(block['headers'], block['rows'])
             elif block['kind'] == 'link':
                 result += '<p>' + link(block['route'], block['label']) + '</p>'
-        if s['code']:
-            result += '<pre><code class="language-dart">' + E(s['code']) + '</code></pre>'
         if s['api']:
             result += table(['API', 'Type', 'Default', 'Behavior'], [[a['name'], a['type'], a['default'], a['description']] for a in s['api']])
+        if s['code']:
+            result += '<pre><code class="language-dart">' + E(s['code']) + '</code></pre>'
         if s['note']:
             result += '<aside class="callout">' + E(s['note']) + '</aside>'
         result += '</section>'
@@ -76,11 +76,11 @@ def markdown_sections(values):
                 out += '\n' + lines(b['items']) + '\n'
             else:
                 out += '\n' + ' | '.join(b['headers']) + '\n' + '\n'.join(' | '.join(row) for row in b['rows']) + '\n'
+        for a in s['api']:
+            out += f'\n- {a["name"]} ({a["type"]}; default {a["default"]}): {a["description"]}\n'
         if s['code']:
             fence = '`' * max(3, max((len(m[0])+1 for m in re.finditer(r'`+', s['code'])), default=3))
             out += f'\n{fence}dart\n{s["code"]}\n{fence}\n'
-        for a in s['api']:
-            out += f'\n- {a["name"]} ({a["type"]}; default {a["default"]}): {a["description"]}\n'
         if s['note']:
             out += '\nNote: ' + s['note'] + '\n'
     return out
@@ -117,7 +117,7 @@ def create_pages(data):
         markdown = markdown_sections(a['sections'])
         if a['packageId'] == 'motion':
             source = data['motionDocsSource']
-            edit = f'https://github.com/oraclevs/nib_motion/edit/{source["commit"]}/{a["source"]}'
+            edit = f'https://github.com/oraclevs/nib_motion/edit/{source["edit_ref"]}/{a["source"]}'
             provenance = f'nib_motion {source["version"]} · {source["channel"]} · source {source["commit"]}'
             body = '<p>' + E(provenance) + ' · ' + link(edit, 'Edit this page on GitHub') + '</p>' + body
             markdown = provenance + '\n\n[Edit this page on GitHub](' + edit + ')\n\n' + markdown

@@ -29,11 +29,12 @@ def run(args):
     try:
         read_json(f'https://raw.githubusercontent.com/oraclevs/nib_motion/{sha}/doc/website.json')
     except HTTPError as error:
-        if error.code == 404 and args.scheduled:
+        if error.code == 404 and not args.commit:
             print('Canonical main has no website manifest yet; waiting for candidate approval.')
             return {'changed': 'false', 'commit': sha}
         raise
-    subprocess.run(['python3', str(ROOT / 'tool/import_motion_docs.py'), '--commit', sha], check=True)
+    edit_ref = 'main' if args.production or args.scheduled else args.edit_ref
+    subprocess.run(['python3', str(ROOT / 'tool/import_motion_docs.py'), '--commit', sha, '--edit-ref', edit_ref], check=True)
     source = json.loads(LOCK.read_text())
     require(not args.production or source['channel'] == 'stable', 'Production requires stable documentation')
     changed = True
@@ -54,6 +55,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--commit')
     parser.add_argument('--scheduled', action='store_true')
+    parser.add_argument('--edit-ref', default='main')
     parser.add_argument('--production', action='store_true')
     args = parser.parse_args()
     result = run(args)

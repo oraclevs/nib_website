@@ -8,6 +8,10 @@ on:
       source_commit:
         description: 'Full canonical docs SHA for a preview; empty resolves main'
         type: string
+      edit_ref:
+        description: 'Editable canonical branch for preview links; source stays SHA-pinned'
+        type: string
+        default: main
       production:
         description: 'Deploy stable main after owner activation'
         type: boolean
@@ -63,10 +67,12 @@ jobs:
       - id: import
         env:
           SOURCE_COMMIT: ${{ inputs.source_commit }}
+          EDIT_REF: ${{ inputs.edit_ref }}
           MODE: ${{ steps.mode.outputs.mode }}
         run: |
           args=()
           if [ -n "$SOURCE_COMMIT" ]; then args+=(--commit "$SOURCE_COMMIT"); fi
+          if [ -n "$EDIT_REF" ]; then args+=(--edit-ref "$EDIT_REF"); fi
           if [ "$MODE" = production ]; then args+=(--production); fi
           if [ "$GITHUB_EVENT_NAME" = schedule ]; then args+=(--scheduled); fi
           python3 tool/prepare_docs_sync.py "${args[@]}"

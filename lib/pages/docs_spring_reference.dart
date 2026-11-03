@@ -717,7 +717,7 @@ class _SpringExampleState extends State<SpringExample> {
                 ),
                 TextButton.icon(
                   onPressed: () => openExternalLink(
-                    'https://github.com/oraclevs/nib_motion/edit/$motionDocsCommit/${motionDocsSources[widget.sectionId]}',
+                    'https://github.com/oraclevs/nib_motion/edit/$motionDocsEditRef/${motionDocsSources[widget.sectionId]}',
                   ),
                   icon: const Icon(Icons.edit_outlined, size: 14),
                   label: const Text('Edit this page on GitHub'),
