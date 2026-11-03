@@ -242,7 +242,9 @@ def run(args):
         repo = args.source_repo or temporary
         if not args.source_repo:
             subprocess.run(['git', 'init', '-q', repo], check=True)
-            subprocess.run(['git', '-C', repo, 'fetch', '-q', '--depth=1', 'https://github.com/oraclevs/nib_motion.git', sha], check=True)
+            subprocess.run(['git', '-C', repo, 'fetch', '-q', '--depth=1', '--filter=blob:none', 'https://github.com/oraclevs/nib_motion.git', sha], check=True)
+            subprocess.run(['git', '-C', repo, 'sparse-checkout', 'set', '--no-cone', '/doc/guides/', '/doc/website.json'], check=True)
+            subprocess.run(['git', '-C', repo, 'checkout', '-q', '--detach', 'FETCH_HEAD'], check=True)
         articles, provenance = import_source(repo, sha, routes, contract)
         provenance['edit_ref'] = edit_ref
         raw = Path(temporary) / 'motion_guides.dart'
