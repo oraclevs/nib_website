@@ -1,14 +1,14 @@
 # Documentation source and delivery
 
 The website source is [oraclevs/nib_website](https://github.com/oraclevs/nib_website),
-in the local `WebsiteEmberLiving` directory. It is a Flutter application with
+in the local `WebsiteEmberLiving` directory. The guide-directory link below pins the reviewed migration; use a page’s edit link for the current authoring branch. It is a Flutter application with
 static HTML and Markdown generated from the same content model. `WebsiteNib`
 is the retired Next.js source; do not deploy it.
 
 ## Edit a Motion guide once
 
 NibMotion owns the technical guides in
-[`doc/guides/`](https://github.com/oraclevs/nib_motion/tree/docs/launch-ready-0.3.6/doc/guides).
+[`doc/guides/`](https://github.com/oraclevs/nib_motion/tree/e93e14f5fd0aa47a8b900f6738e40bb766bcc6d1/doc/guides).
 Its `doc/website.json` lists all 35 guides, the documentation channel, supported
 package version and runtime commit. The website-owned
 [`tool/motion_docs_routes.json`](../tool/motion_docs_routes.json) maps these files
