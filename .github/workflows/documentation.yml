@@ -168,8 +168,8 @@ jobs:
           test -n "$VERCEL_TOKEN"
           args=()
           if [ "$MODE" = production ]; then args+=(--prod); fi
-          vercel deploy --prebuilt --yes --scope "$VERCEL_ORG_ID" --token "$VERCEL_TOKEN" "${args[@]}" > deployment-url.txt
-          url=$(tail -n 1 deployment-url.txt)
+          vercel deploy --prebuilt --yes --json --scope "$VERCEL_ORG_ID" --token "$VERCEL_TOKEN" "${args[@]}" > deployment.json
+          url=$(python3 -c 'import json; print(json.load(open("deployment.json"))["deployment"]["url"])')
           if [ "$MODE" = production ]; then
             python3 tool/check_deployment.py "$url"
           else
