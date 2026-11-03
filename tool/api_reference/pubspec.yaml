@@ -1,0 +1,6 @@
+name: nib_api_reference_tool
+publish_to: none
+environment:
+  sdk: ^3.13.0
+dependencies:
+  analyzer: 13.3.0

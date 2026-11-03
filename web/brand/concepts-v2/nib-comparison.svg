@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1000" role="img" aria-labelledby="title desc">
+<title id="title">Nib logo alternatives</title><desc id="desc">Four NIB and writing nib concepts, labeled A through D.</desc>
+<rect width="1200" height="1000" fill="#111210"/><text x="40" y="51" fill="#ffb511" font-family="monospace" font-size="13" letter-spacing="3">NIB / FOUR LOGO DIRECTIONS</text><text x="40" y="97" fill="#f5e9c9" font-family="Arial,sans-serif" font-size="30" font-weight="700">Three letters. A nib at work.</text><g transform="translate(30 135)"><rect width="555" height="390" rx="14" fill="#181a14" stroke="#373a30"/><text x="28" y="43" fill="#ffb511" font-family="Arial,sans-serif" font-size="22" font-weight="700">A</text><text x="65" y="43" fill="#f5e9c9" font-family="Arial,sans-serif" font-size="22" font-weight="700">The writing I</text><g transform="translate(28 72)"><g fill="none" stroke="#ffb511" stroke-width="24" stroke-linecap="round" stroke-linejoin="round">
+     <path d="M78 204V90L166 204V90"/>
+     <path d="M295 90V204H340C389 204 393 146 342 146H295M295 90H335C379 90 379 146 340 146"/>
+     </g>
+     <path d="M230 204C225 235 288 232 324 230C394 226 400 250 350 252H92" fill="none" stroke="#ffb511" stroke-width="5" stroke-linecap="round"/>
+     <g transform="translate(230 204) rotate(0) scale(1.25)">
+    <path d="M-18-108H18V-84H-18Z" fill="#f5e9c9"/>
+    <path d="M-21-78L-28-58Q-20-27 0 0Q20-27 28-58L21-78Z" fill="#f5e9c9"/>
+    <path d="M0-48V-2" stroke="#111210" stroke-width="3"/>
+    <circle cy="-48" r="6" fill="#111210"/>
+    <path d="M-17-57L-9-37M17-57L9-37" stroke="#111210" stroke-width="1.5" fill="none"/>
+    </g></g></g><g transform="translate(615 135)"><rect width="555" height="390" rx="14" fill="#181a14" stroke="#373a30"/><text x="28" y="43" fill="#ffb511" font-family="Arial,sans-serif" font-size="22" font-weight="700">B</text><text x="65" y="43" fill="#f5e9c9" font-family="Arial,sans-serif" font-size="22" font-weight="700">The signature</text><g transform="translate(28 72)"><g fill="none" stroke="#f5e9c9" stroke-width="15" stroke-linecap="round" stroke-linejoin="round">
+     <path d="M67 192L80 126M71 170C87 128 126 118 128 149C129 164 115 197 140 188"/>
+     <path d="M171 133L160 177Q155 203 185 183"/>
+     <path d="M211 179C222 143 253 65 235 58C217 52 205 107 205 153C205 195 240 202 260 172C286 131 235 122 212 165"/>
+     </g><circle cx="178" cy="104" r="9" fill="#ffb511"/>
+     <path d="M249 187C281 193 308 174 326 150" fill="none" stroke="#ffb511" stroke-width="7" stroke-linecap="round"/>
+     <g transform="translate(326 150) rotate(34) scale(0.91)">
+    <path d="M-18-108H18V-84H-18Z" fill="#f5e9c9"/>
+    <path d="M-21-78L-28-58Q-20-27 0 0Q20-27 28-58L21-78Z" fill="#f5e9c9"/>
+    <path d="M0-48V-2" stroke="#111210" stroke-width="3"/>
+    <circle cy="-48" r="6" fill="#111210"/>
+    <path d="M-17-57L-9-37M17-57L9-37" stroke="#111210" stroke-width="1.5" fill="none"/>
+    </g>
+     <path d="M84 225Q177 211 257 217" fill="none" stroke="#ffb511" stroke-width="3" stroke-linecap="round"/></g></g><g transform="translate(30 550)"><rect width="555" height="390" rx="14" fill="#181a14" stroke="#373a30"/><text x="28" y="43" fill="#ffb511" font-family="Arial,sans-serif" font-size="22" font-weight="700">C</text><text x="65" y="43" fill="#f5e9c9" font-family="Arial,sans-serif" font-size="22" font-weight="700">The finishing stroke</text><g transform="translate(28 72)"><g transform="translate(28 8) skewX(-9)" fill="#f5e9c9">
+     <path d="M64 193V77H92L145 151V77H174V193H146L93 119V193Z"/>
+     <path d="M196 77H225V193H196Z"/>
+     <path fill-rule="evenodd" d="M247 77H299C351 77 351 132 328 137C361 146 352 193 302 193H247ZM276 100V125H297C316 125 316 100 297 100ZM276 147V170H301C321 170 321 147 301 147Z"/>
+     </g>
+     <path d="M322 193C362 200 378 229 332 235C276 244 172 214 95 228" fill="none" stroke="#ffb511" stroke-width="7" stroke-linecap="round"/>
+     <path d="M95 228C69 232 70 246 93 245C176 241 286 255 381 221" fill="none" stroke="#ffb511" stroke-width="3" stroke-linecap="round"/>
+     <g transform="translate(381 221) rotate(27) scale(1.16)">
+    <path d="M-18-108H18V-84H-18Z" fill="#ffb511"/>
+    <path d="M-21-78L-28-58Q-20-27 0 0Q20-27 28-58L21-78Z" fill="#ffb511"/>
+    <path d="M0-48V-2" stroke="#111210" stroke-width="3"/>
+    <circle cy="-48" r="6" fill="#111210"/>
+    <path d="M-17-57L-9-37M17-57L9-37" stroke="#111210" stroke-width="1.5" fill="none"/>
+    </g></g></g><g transform="translate(615 550)"><rect width="555" height="390" rx="14" fill="#181a14" stroke="#373a30"/><text x="28" y="43" fill="#ffb511" font-family="Arial,sans-serif" font-size="22" font-weight="700">D</text><text x="65" y="43" fill="#f5e9c9" font-family="Arial,sans-serif" font-size="22" font-weight="700">The ink seal</text><g transform="translate(28 72)"><path d="M316 222C268 264 173 244 151 191C125 130 161 61 223 47C288 32 348 75 353 136" fill="none" stroke="#ffb511" stroke-width="6" stroke-linecap="round"/>
+     <g fill="none" stroke="#f5e9c9" stroke-width="13" stroke-linecap="round" stroke-linejoin="round">
+     <path d="M174 174V112L211 174V112"/>
+     <path d="M233 112V174"/>
+     <path d="M256 112V174H278C307 174 307 143 278 143H256M256 112H277C302 112 302 143 277 143"/>
+     </g>
+     <g transform="translate(316 222) rotate(33) scale(0.83)">
+    <path d="M-18-108H18V-84H-18Z" fill="#f5e9c9"/>
+    <path d="M-21-78L-28-58Q-20-27 0 0Q20-27 28-58L21-78Z" fill="#f5e9c9"/>
+    <path d="M0-48V-2" stroke="#111210" stroke-width="3"/>
+    <circle cy="-48" r="6" fill="#111210"/>
+    <path d="M-17-57L-9-37M17-57L9-37" stroke="#111210" stroke-width="1.5" fill="none"/>
+    </g></g></g>
+</svg>

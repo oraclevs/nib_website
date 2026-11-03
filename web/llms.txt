@@ -1,0 +1,19 @@
+# Nib Ember Living
+
+> A Flutter website for trying Nib interaction recipes and reading package guides. This build is a local preview and is marked noindex.
+
+## Packages
+
+- [NibMotion](/packages/motion): Flutter animation package. [Published package](https://pub.dev/packages/nib_motion).
+- [NibComponents](/packages/components): Flutter UI components that depend on NibMotion. [Published package](https://pub.dev/packages/nib_components).
+- [NibGenUI](/packages/genui): Unpublished local packages implementing a tested subset of A2UI v0.9.1. The site does not run a live AI backend.
+
+## Explore
+
+- [Package guides](/packages)
+- [Example gallery](/examples)
+- [Search](/search)
+
+## Limits
+
+The site is developed against local candidate sources. An example may require a newer candidate API than the currently hosted package. Check the displayed code and package version before copying it into an app. NibGenUI does not claim full A2UI protocol conformance or production backend validation.

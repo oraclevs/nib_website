@@ -1,0 +1,44 @@
+name: Documentation
+on:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: WebsiteEmberLiving
+      - uses: actions/checkout@v4
+        with:
+          repository: oraclevs/nib_motion
+          ref: 166891c762f2579e470b6bb25c564b0ac95ad407
+          path: MotionNib/motion
+      - uses: actions/checkout@v4
+        with:
+          repository: oraclevs/nib_components
+          ref: e4719a210086d1b37a51d1b62ea9ee85c2ab5cfa
+          path: ComponetsNib/nib_components
+      - uses: actions/checkout@v4
+        with:
+          repository: oraclevs/nib_genui
+          ref: 806f29d8aa02d076765866145a304beaab09d26f
+          token: ${{ secrets.NIB_GENUI_READ_TOKEN }}
+          path: GenUINib
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.47.8'
+          channel: stable
+          cache: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install Pillow==11.3.0
+      - run: WebsiteEmberLiving/tool/check_docs.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: reviewed-static-preview
+          path: WebsiteEmberLiving/.vercel/output
+          include-hidden-files: true

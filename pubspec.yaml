@@ -1,0 +1,57 @@
+name: nib_ember_living
+description: Nib ecosystem website built in Flutter from the approved Ember Living reference.
+publish_to: 'none'
+version: 0.1.0+1
+
+environment:
+  sdk: ^3.13.3
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_web_plugins:
+    sdk: flutter
+  nib_motion:
+    path: ../MotionNib/motion
+  nib_components:
+    path: ../ComponetsNib/nib_components
+  nib_genui:
+    path: ../GenUINib/packages/nib_genui
+  cupertino_icons: ^2.0.0
+  shared_preferences: ^2.5.6
+
+dependency_overrides:
+  nib_genui_core:
+    path: ../GenUINib/packages/nib_genui_core
+  nib_components:
+    path: ../ComponetsNib/nib_components
+  nib_motion:
+    path: ../MotionNib/motion
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/brand/nib-mark.png
+    - lib/ember_material_theme.dart
+    - assets/reference/public_api.json
+    - lib/docs/examples/
+    - lib/recipes/
+    - lib/components/examples/
+    - lib/components/component_settings.dart
+    - lib/components/component_theme.dart
+    - lib/components/component_toggle.dart
+    - lib/pages/docs_spring_demo.dart
+  fonts:
+    - family: Ember Sans
+      fonts:
+        - asset: assets/fonts/LiberationSans-Regular.ttf
+        - asset: assets/fonts/LiberationSans-Bold.ttf
+          weight: 700
+    - family: Ember Mono
+      fonts:
+        - asset: assets/fonts/DejaVuSansMono.ttf

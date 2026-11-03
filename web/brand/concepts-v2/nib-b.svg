@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 280" role="img" aria-labelledby="title desc">
+<title id="title">The signature</title><desc id="desc">Joined lowercase nib lettering, finished by a fountain pen at the end of the ink stroke.</desc>
+<g fill="none" stroke="#f5e9c9" stroke-width="15" stroke-linecap="round" stroke-linejoin="round">
+     <path d="M67 192L80 126M71 170C87 128 126 118 128 149C129 164 115 197 140 188"/>
+     <path d="M171 133L160 177Q155 203 185 183"/>
+     <path d="M211 179C222 143 253 65 235 58C217 52 205 107 205 153C205 195 240 202 260 172C286 131 235 122 212 165"/>
+     </g><circle cx="178" cy="104" r="9" fill="#ffb511"/>
+     <path d="M249 187C281 193 308 174 326 150" fill="none" stroke="#ffb511" stroke-width="7" stroke-linecap="round"/>
+     <g transform="translate(326 150) rotate(34) scale(0.91)">
+    <path d="M-18-108H18V-84H-18Z" fill="#f5e9c9"/>
+    <path d="M-21-78L-28-58Q-20-27 0 0Q20-27 28-58L21-78Z" fill="#f5e9c9"/>
+    <path d="M0-48V-2" stroke="#111210" stroke-width="3"/>
+    <circle cy="-48" r="6" fill="#111210"/>
+    <path d="M-17-57L-9-37M17-57L9-37" stroke="#111210" stroke-width="1.5" fill="none"/>
+    </g>
+     <path d="M84 225Q177 211 257 217" fill="none" stroke="#ffb511" stroke-width="3" stroke-linecap="round"/>
+</svg>

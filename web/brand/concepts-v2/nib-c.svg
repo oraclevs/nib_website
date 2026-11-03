@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 280" role="img" aria-labelledby="title desc">
+<title id="title">The finishing stroke</title><desc id="desc">Bold, forward-leaning NIB lettering flows into a pen-drawn flourish from the B.</desc>
+<g transform="translate(28 8) skewX(-9)" fill="#f5e9c9">
+     <path d="M64 193V77H92L145 151V77H174V193H146L93 119V193Z"/>
+     <path d="M196 77H225V193H196Z"/>
+     <path fill-rule="evenodd" d="M247 77H299C351 77 351 132 328 137C361 146 352 193 302 193H247ZM276 100V125H297C316 125 316 100 297 100ZM276 147V170H301C321 170 321 147 301 147Z"/>
+     </g>
+     <path d="M322 193C362 200 378 229 332 235C276 244 172 214 95 228" fill="none" stroke="#ffb511" stroke-width="7" stroke-linecap="round"/>
+     <path d="M95 228C69 232 70 246 93 245C176 241 286 255 381 221" fill="none" stroke="#ffb511" stroke-width="3" stroke-linecap="round"/>
+     <g transform="translate(381 221) rotate(27) scale(1.16)">
+    <path d="M-18-108H18V-84H-18Z" fill="#ffb511"/>
+    <path d="M-21-78L-28-58Q-20-27 0 0Q20-27 28-58L21-78Z" fill="#ffb511"/>
+    <path d="M0-48V-2" stroke="#111210" stroke-width="3"/>
+    <circle cy="-48" r="6" fill="#111210"/>
+    <path d="M-17-57L-9-37M17-57L9-37" stroke="#111210" stroke-width="1.5" fill="none"/>
+    </g>
+</svg>

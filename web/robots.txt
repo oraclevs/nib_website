@@ -1,0 +1,4 @@
+# Preview pages are marked noindex in their HTML. Crawlers need access to read
+# that directive; disallowing these URLs here would hide it.
+User-agent: *
+Allow: /
