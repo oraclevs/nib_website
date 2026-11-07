@@ -34,8 +34,8 @@ full SHA and individual source hashes. Search uses the generated guide bodies.
 
 ## Version policy
 
-The stable guides describe published nib_motion **0.3.5**. The package candidate
-is **0.3.6**, still unpublished. Documentation corrections for 0.3.5 can retain
+The stable guides were checked against published nib_motion **0.3.5**. Version
+**0.3.6** is also published. Documentation corrections for 0.3.5 can retain
 that stable target. New APIs require an explicitly reviewed `next` source and
 matching consumer contract; production rejects a `next` channel.
 

@@ -1,14 +1,14 @@
 {
   "schema": 1,
   "repository": "oraclevs/nib_motion",
-  "commit": "e93e14f5fd0aa47a8b900f6738e40bb766bcc6d1",
+  "commit": "e75104fd0dfe18efca90ab3b43f339ef6e83bc79",
   "package_version": "0.3.5",
   "channel": "stable",
   "runtime_commit": "166891c762f2579e470b6bb25c564b0ac95ad407",
   "files": {
     "doc/website.json": "f53d8f3b2586213cca17584a9c6d3b5d17fc6e55db889009c6fa62ac59c8ddd2",
-    "doc/guides/introduction.md": "ea4949a86aebaa4a66a008cb1e1b72a1c0d86a79d5e97b6b6b556e48a7c0d300",
-    "doc/guides/installation.md": "1c68fbdf91640b1e5a3fe807ae4e4ba058e6c0bdd9bf7f87a7ee545479a565f8",
+    "doc/guides/introduction.md": "89c0ada92ae1589d9e33b25232a7133d51f8c2a6e3bf336112e9261df63b8828",
+    "doc/guides/installation.md": "17c2f1249af61c167ea8e5bfc2671e8d15f50d413ff988f9fbbe86987478d323",
     "doc/guides/getting-started.md": "f6668ddbaf5e7d70a84f342cec0f6ce574a8b31e424fbc49e8e4b0d80669dfd7",
     "doc/guides/first-animation.md": "820f7a04b46ce8b7264f9276a12b6896ea8840c4acd14e3ec9a7301a9c40f32f",
     "doc/guides/springs.md": "f1b4c370a61863e6a9c1c4265c46681aa1283c7c681b6f15e040c942d2c470fe",
@@ -23,9 +23,9 @@
     "doc/guides/layout-animations.md": "a2d8ce68ef5f1d4bb88291e44e2c226b25837a7f9073522f8d16d38e66c5f401",
     "doc/guides/layout-presence.md": "b6582849af3799a0fec0e75907d1d8e65749a3aa3e44914c5ae2e9da37c06746",
     "doc/guides/performance.md": "6862e2bb9ce3ea10ae99fba9ed5d61e70f4506db1e2cf97b17a04a022682152c",
-    "doc/guides/api.md": "d035a353e4d0e11b87bc385ac41ff6f21b9041338323e8c066f031d87ec61143",
+    "doc/guides/api.md": "fc26d65e6edc82d95141f88d38b610a271b3a8d86939e72db37cf0578fd29387",
     "doc/guides/platform-limits.md": "bbbe4f724c7c14328a26b2c4e0d9e669e73c5631aed0ae144384f8bb7f62d324",
-    "doc/guides/troubleshooting.md": "fd79d0839e272f890e20636e17e88b182ea1b75d168dcaeb5d6398d27533a8b6",
+    "doc/guides/troubleshooting.md": "838980589cdb346ed4ee6840726ea0c209cc599425138077ea03e58895135ec6",
     "doc/guides/controllers.md": "00c002ddad31b9aa3cdd21df72a6e2f948ea386cc9feec6aba17667a9f0b1df0",
     "doc/guides/timeline.md": "99fd92fc3ef8ba4b858cb30137b5b03b210c7ae4d60cfd420b3c24b98585558a",
     "doc/guides/text-motion.md": "04a9239de07cd6ce59e4cfc1158113443006eaed1250478cac7b964ba97e0ccc",
@@ -41,8 +41,8 @@
     "doc/guides/routes.md": "9c2b6360f9753f9249740fa0bd6e50c77be1b69fa6de10286246a4a21d33b484",
     "doc/guides/water.md": "0d9defb4794b44cdfb57c1e3d1ee972e491ddf882aad126ee1c39629399784dc",
     "doc/guides/debugging.md": "28e268f25d16a71ff7b8509e68a7c17c0fb4a8d307e70843b506bda100bef745",
-    "doc/guides/migration.md": "074ddde4fe6441f12b9ca192e422499e9aa87e6bac86636dacefb084f2c2d813"
+    "doc/guides/migration.md": "1afbaf75c3a5797b3477b2acedda65ce8a6e9576d84215151451abee96eeba57"
   },
-  "content_sha256": "082ea8a7b60161f316cfc14af8553d118c8fc95583766d3c90274ead9c7a1c50",
-  "edit_ref": "docs/launch-ready-0.3.6"
+  "content_sha256": "b303f931dc4b886d81404d602f2c47ef22481c66d9082be0cb86995722ee024e",
+  "edit_ref": "fix/guide-0.3.6-published"
 }

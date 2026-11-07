@@ -242,7 +242,7 @@ abstract final class SiteContent {
       role: '01 / INTERACTION LAYER',
       tagline: 'One motion model. From a press to a whole interface.',
       description: 'NibMotion connects state, motion values and interruptible drivers across gestures, layout, scroll, timelines and visual effects. Start with a target on one Flutter widget; use the same model as the interaction grows. It depends only on the Flutter SDK.',
-      status: 'Published on pub.dev · $motionPublishedVersion',
+      status: 'Published on pub.dev · $motionLatestVersion',
       install: 'flutter pub add nib_motion',
       capabilities: [
         'Declarative motion',
