@@ -1,0 +1,217 @@
+{
+  "schema": 1,
+  "repository": "oraclevs/nib_motion",
+  "branch": "main",
+  "guides": [
+    {
+      "id": "introduction",
+      "route": "/docs/motion/introduction",
+      "source": "doc/guides/introduction.md",
+      "recipe": null
+    },
+    {
+      "id": "installation",
+      "route": "/docs/motion/installation",
+      "source": "doc/guides/installation.md",
+      "recipe": null
+    },
+    {
+      "id": "getting-started",
+      "route": "/docs/motion/getting-started",
+      "source": "doc/guides/getting-started.md",
+      "recipe": null
+    },
+    {
+      "id": "first-animation",
+      "route": "/docs/motion/first-animation",
+      "source": "doc/guides/first-animation.md",
+      "recipe": null
+    },
+    {
+      "id": "springs",
+      "route": "/docs/motion/springs",
+      "source": "doc/guides/springs.md",
+      "recipe": "spring-retarget"
+    },
+    {
+      "id": "keyframes",
+      "route": "/docs/motion/keyframes",
+      "source": "doc/guides/keyframes.md",
+      "recipe": null
+    },
+    {
+      "id": "motion-values",
+      "route": "/docs/motion/motion-values",
+      "source": "doc/guides/motion-values.md",
+      "recipe": "linked-objects"
+    },
+    {
+      "id": "presence",
+      "route": "/docs/motion/presence",
+      "source": "doc/guides/presence.md",
+      "recipe": "presence-reflow"
+    },
+    {
+      "id": "gestures",
+      "route": "/docs/motion/gestures",
+      "source": "doc/guides/gestures.md",
+      "recipe": "bounded-drag"
+    },
+    {
+      "id": "scroll-motion",
+      "route": "/docs/motion/scroll-motion",
+      "source": "doc/guides/scroll-motion.md",
+      "recipe": "viewport-reveal"
+    },
+    {
+      "id": "accessibility",
+      "route": "/docs/motion/accessibility",
+      "source": "doc/guides/accessibility.md",
+      "recipe": null
+    },
+    {
+      "id": "transitions",
+      "route": "/docs/motion/transitions",
+      "source": "doc/guides/transitions.md",
+      "recipe": null
+    },
+    {
+      "id": "variants-stagger",
+      "route": "/docs/motion/variants-stagger",
+      "source": "doc/guides/variants-stagger.md",
+      "recipe": null
+    },
+    {
+      "id": "layout-animations",
+      "route": "/docs/motion/layout-animations",
+      "source": "doc/guides/layout-animations.md",
+      "recipe": "keyed-reorder"
+    },
+    {
+      "id": "layout-presence",
+      "route": "/docs/motion/layout-presence",
+      "source": "doc/guides/layout-presence.md",
+      "recipe": "presence-reflow"
+    },
+    {
+      "id": "performance",
+      "route": "/docs/motion/performance",
+      "source": "doc/guides/performance.md",
+      "recipe": "linked-objects"
+    },
+    {
+      "id": "api",
+      "route": "/docs/motion/api",
+      "source": "doc/guides/api.md",
+      "recipe": null
+    },
+    {
+      "id": "platform-limits",
+      "route": "/docs/motion/platform-limits",
+      "source": "doc/guides/platform-limits.md",
+      "recipe": null
+    },
+    {
+      "id": "troubleshooting",
+      "route": "/docs/motion/troubleshooting",
+      "source": "doc/guides/troubleshooting.md",
+      "recipe": null
+    },
+    {
+      "id": "controllers",
+      "route": "/docs/motion/controllers",
+      "source": "doc/guides/controllers.md",
+      "recipe": null
+    },
+    {
+      "id": "timeline",
+      "route": "/docs/motion/timeline",
+      "source": "doc/guides/timeline.md",
+      "recipe": null
+    },
+    {
+      "id": "text-motion",
+      "route": "/docs/motion/text-motion",
+      "source": "doc/guides/text-motion.md",
+      "recipe": null
+    },
+    {
+      "id": "path-motion",
+      "route": "/docs/motion/path-motion",
+      "source": "doc/guides/path-motion.md",
+      "recipe": null
+    },
+    {
+      "id": "navigation",
+      "route": "/docs/motion/navigation",
+      "source": "doc/guides/navigation.md",
+      "recipe": null
+    },
+    {
+      "id": "shaders",
+      "route": "/docs/motion/shaders",
+      "source": "doc/guides/shaders.md",
+      "recipe": null
+    },
+    {
+      "id": "physics",
+      "route": "/docs/motion/physics",
+      "source": "doc/guides/physics.md",
+      "recipe": null
+    },
+    {
+      "id": "presets",
+      "route": "/docs/motion/presets",
+      "source": "doc/guides/presets.md",
+      "recipe": null
+    },
+    {
+      "id": "motion-lists",
+      "route": "/docs/motion/motion-lists",
+      "source": "doc/guides/motion-lists.md",
+      "recipe": null
+    },
+    {
+      "id": "viewport-motion",
+      "route": "/docs/motion/viewport-motion",
+      "source": "doc/guides/viewport-motion.md",
+      "recipe": null
+    },
+    {
+      "id": "drag-and-drop",
+      "route": "/docs/motion/drag-and-drop",
+      "source": "doc/guides/drag-and-drop.md",
+      "recipe": null
+    },
+    {
+      "id": "animation-sequences",
+      "route": "/docs/motion/animation-sequences",
+      "source": "doc/guides/animation-sequences.md",
+      "recipe": null
+    },
+    {
+      "id": "routes",
+      "route": "/docs/motion/routes",
+      "source": "doc/guides/routes.md",
+      "recipe": null
+    },
+    {
+      "id": "water",
+      "route": "/docs/motion/water",
+      "source": "doc/guides/water.md",
+      "recipe": null
+    },
+    {
+      "id": "debugging",
+      "route": "/docs/motion/debugging",
+      "source": "doc/guides/debugging.md",
+      "recipe": null
+    },
+    {
+      "id": "migration",
+      "route": "/docs/motion/migration",
+      "source": "doc/guides/migration.md",
+      "recipe": null
+    }
+  ]
+}

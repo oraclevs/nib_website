@@ -1,44 +1,179 @@
-name: Documentation
+name: Documentation delivery
 on:
   pull_request:
+  push:
+    branches: [main]
   workflow_dispatch:
+    inputs:
+      source_commit:
+        description: 'Full canonical docs SHA for a preview; empty resolves main'
+        type: string
+      edit_ref:
+        description: 'Editable canonical branch for preview links; source stays SHA-pinned'
+        type: string
+        default: main
+      production:
+        description: 'Deploy stable main after owner activation'
+        type: boolean
+        default: false
+  schedule:
+    - cron: '17,47 * * * *'
 permissions:
   contents: read
+concurrency:
+  group: docs-${{ github.event_name == 'pull_request' && github.ref || 'delivery' }}
+  cancel-in-progress: false
 jobs:
-  verify:
+  import-check:
+    name: Canonical documentation checks
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: dart-lang/setup-dart@6afc89df92d6eb3834022f73cd65adc8cdfcb92d # v1
+        with:
+          sdk: '3.13.7'
+      - run: python3 -m unittest discover -s tool -p 'test_*docs*.py'
+      - run: python3 tool/import_motion_docs.py --check
+
+  prepare:
+    needs: import-check
+    if: github.event_name != 'pull_request' && (github.event_name != 'schedule' || vars.PRODUCTION_SYNC_ENABLED == 'true')
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.import.outputs.changed }}
+      commit: ${{ steps.import.outputs.commit }}
+      mode: ${{ steps.mode.outputs.mode }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: dart-lang/setup-dart@6afc89df92d6eb3834022f73cd65adc8cdfcb92d # v1
+        with:
+          sdk: '3.13.7'
+      - id: mode
+        env:
+          PRODUCTION: ${{ github.event_name == 'schedule' || inputs.production }}
+          ENABLED: ${{ vars.PRODUCTION_SYNC_ENABLED }}
+        run: |
+          if [ "$PRODUCTION" = true ]; then
+            test "$GITHUB_REF" = refs/heads/main
+            test "$ENABLED" = true
+            echo mode=production >> "$GITHUB_OUTPUT"
+          else
+            echo mode=preview >> "$GITHUB_OUTPUT"
+          fi
+      - id: import
+        env:
+          SOURCE_COMMIT: ${{ inputs.source_commit }}
+          EDIT_REF: ${{ inputs.edit_ref }}
+          MODE: ${{ steps.mode.outputs.mode }}
+        run: |
+          args=()
+          if [ -n "$SOURCE_COMMIT" ]; then args+=(--commit "$SOURCE_COMMIT"); fi
+          if [ -n "$EDIT_REF" ]; then args+=(--edit-ref "$EDIT_REF"); fi
+          if [ "$MODE" = production ]; then args+=(--production); fi
+          if [ "$GITHUB_EVENT_NAME" = schedule ]; then args+=(--scheduled); fi
+          python3 tool/prepare_docs_sync.py "${args[@]}"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: steps.import.outputs.changed == 'true'
+        with:
+          name: canonical-docs
+          path: |
+            lib/content/motion_guides.dart
+            tool/motion_docs.lock.json
+            assets/reference/motion_docs_source.json
+          retention-days: 14
+      - run: echo 'Private build and deployment stay disabled until TRUSTED_BUILD_ENABLED is true and the environment secrets are installed.' >> "$GITHUB_STEP_SUMMARY"
+
+  build:
+    needs: prepare
+    if: needs.prepare.outputs.changed == 'true' && vars.TRUSTED_BUILD_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    environment: trusted-build
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           path: WebsiteEmberLiving
-      - uses: actions/checkout@v4
+          persist-credentials: false
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: canonical-docs
+          path: WebsiteEmberLiving
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           repository: oraclevs/nib_motion
           ref: 166891c762f2579e470b6bb25c564b0ac95ad407
           path: MotionNib/motion
-      - uses: actions/checkout@v4
+          persist-credentials: false
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           repository: oraclevs/nib_components
           ref: e4719a210086d1b37a51d1b62ea9ee85c2ab5cfa
           path: ComponetsNib/nib_components
-      - uses: actions/checkout@v4
+          persist-credentials: false
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           repository: oraclevs/nib_genui
           ref: 806f29d8aa02d076765866145a304beaab09d26f
-          token: ${{ secrets.NIB_GENUI_READ_TOKEN }}
+          ssh-key: ${{ secrets.NIB_GENUI_DEPLOY_KEY }}
           path: GenUINib
-      - uses: subosito/flutter-action@v2
+          persist-credentials: false
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
         with:
           flutter-version: '3.47.8'
           channel: stable
           cache: true
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: '3.12'
-      - run: python -m pip install Pillow==11.3.0
+      - run: python3 -m pip install Pillow==11.3.0
       - run: WebsiteEmberLiving/tool/check_docs.sh
-      - uses: actions/upload-artifact@v4
+      - if: needs.prepare.outputs.mode == 'production'
+        working-directory: WebsiteEmberLiving
+        run: |
+          python3 tool/build_seo.py --mode production
+          python3 tool/verify_seo.py
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: reviewed-static-preview
-          path: WebsiteEmberLiving/.vercel/output
+          name: verified-website
           include-hidden-files: true
+          path: WebsiteEmberLiving/.vercel/output
+          retention-days: 14
+
+  deploy:
+    needs: [prepare, build]
+    runs-on: ubuntu-latest
+    environment: ${{ needs.prepare.outputs.mode }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: verified-website
+          path: .vercel/output
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22'
+      - run: npm install --global vercel@59.1.4
+      - name: Deploy the verified artifact
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: team_uLkGKaENnuPQXup2m6SleSHd
+          VERCEL_PROJECT_ID: prj_LP8bODFk3QYDXwYYBoHEpsTouQZd
+          MODE: ${{ needs.prepare.outputs.mode }}
+        run: |
+          test -n "$VERCEL_TOKEN"
+          args=()
+          if [ "$MODE" = production ]; then args+=(--prod); fi
+          vercel deploy --prebuilt --yes --json --scope "$VERCEL_ORG_ID" --token "$VERCEL_TOKEN" "${args[@]}" > deployment.json
+          url=$(python3 -c 'import json; print(json.load(open("deployment.json"))["deployment"]["url"])')
+          if [ "$MODE" = production ]; then
+            python3 tool/check_deployment.py "$url"
+          else
+            python3 tool/check_deployment.py "$url" --preview
+          fi
+          echo "Verified $MODE deployment: $url" >> "$GITHUB_STEP_SUMMARY"
+          echo 'Canonical source: ${{ needs.prepare.outputs.commit }}' >> "$GITHUB_STEP_SUMMARY"

@@ -116,5 +116,6 @@
     "lib/shaders/gradient_sweep.frag": "8f0af17eede320a69e2987095a55bae29411cf86f2dbf9ccc78649eba264bb6f",
     "lib/shaders/dissolve.frag": "e5bb14576ff99ba1da8930c06bddf97f0a84f33b0345159ee1114166e9ce356a",
     "lib/nib_motion.dart": "d63f490da3899e9e421017ecb77a85ccfcedd1ca3fc4eb7a6acee5a86511998c"
-  }
+  },
+  "commit": "166891c762f2579e470b6bb25c564b0ac95ad407"
 }

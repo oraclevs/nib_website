@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:nib_ember_living/content/site_content.dart';
 import 'package:nib_ember_living/content/motion_capabilities.dart';
+import 'package:nib_ember_living/content/motion_guides.dart';
 import 'package:nib_ember_living/content/motion_api_topics.dart';
 import 'package:nib_ember_living/docs/doc_example_catalog.dart';
 import 'package:nib_ember_living/components/component_catalog.dart';
@@ -55,6 +56,12 @@ void main() {
     );
     final content = {
       'motionVersion': motionPublishedVersion,
+      'motionDocsSource': {
+        'commit': motionDocsCommit,
+        'version': motionDocsVersion,
+        'channel': motionDocsChannel,
+        'edit_ref': motionDocsEditRef,
+      },
       'motionCapabilities': motionCapabilities.map(section).toList(),
       'motionApiTopics': motionApiTopics,
       'packages': SiteContent.packages
@@ -80,6 +87,7 @@ void main() {
               'route': a.route,
               'id': a.id,
               'packageId': a.packageId,
+              if (a.packageId == 'motion') 'source': motionDocsSources[a.id],
               'title': a.title,
               'summary': a.summary,
               'sections': a.sections.map(section).toList(),

@@ -11,6 +11,7 @@ ROOT=Path(__file__).resolve().parents[1]
 OUTPUT=ROOT/'.vercel/output'
 manifest=json.loads((OUTPUT/'nib-build-manifest.json').read_text())
 source=json.loads((ROOT/'build/seo/content.json').read_text())
+provenance=json.loads((ROOT/'tool/motion_docs.lock.json').read_text())
 static=OUTPUT/'static'
 
 class Page(HTMLParser):
@@ -59,6 +60,10 @@ for route in manifest['routes']:
     article=next((a for a in source['articles'] if a['route']==route),None)
     if article:
         text=''.join(parsed.text)
+        if article['packageId']=='motion':
+            check(provenance['commit'] in text,route+': missing documentation SHA')
+            check('nib_motion '+provenance['package_version'] in text,route+': missing package version')
+            check('https://github.com/oraclevs/nib_motion/edit/'+provenance['edit_ref']+'/'+article['source'] in parsed.links,route+': missing edit link')
         for section in article['sections']:
             for paragraph in section['paragraphs']:
                 check(paragraph in text,route+': missing source paragraph')
@@ -74,6 +79,7 @@ check(manifest['origin']+'/search' not in urls,'Search must not be in sitemap')
 check('/sitemap.xml' in (static/'robots.txt').read_text(),'Missing robots sitemap')
 check(not any(p.name.startswith('.env') for p in static.rglob('*')),'Environment file in public output')
 check('noindex' in Page((static/'404.html').read_text()).metas['robots'],'404 must be noindex')
+check(json.loads((static/'motion-docs-source.json').read_text())==provenance,'Deployed provenance differs from source lock')
 if problems:
     raise SystemExit('\n'.join(problems))
 print(f'PASSED: {len(all_routes)} routes, full guide/code parity, metadata, links, sitemap, social images, artifact hashes and preview/production robots rules.')

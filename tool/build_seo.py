@@ -49,10 +49,10 @@ def sections(values):
                 result += table(block['headers'], block['rows'])
             elif block['kind'] == 'link':
                 result += '<p>' + link(block['route'], block['label']) + '</p>'
-        if s['code']:
-            result += '<pre><code class="language-dart">' + E(s['code']) + '</code></pre>'
         if s['api']:
             result += table(['API', 'Type', 'Default', 'Behavior'], [[a['name'], a['type'], a['default'], a['description']] for a in s['api']])
+        if s['code']:
+            result += '<pre><code class="language-dart">' + E(s['code']) + '</code></pre>'
         if s['note']:
             result += '<aside class="callout">' + E(s['note']) + '</aside>'
         result += '</section>'
@@ -76,11 +76,11 @@ def markdown_sections(values):
                 out += '\n' + lines(b['items']) + '\n'
             else:
                 out += '\n' + ' | '.join(b['headers']) + '\n' + '\n'.join(' | '.join(row) for row in b['rows']) + '\n'
+        for a in s['api']:
+            out += f'\n- {a["name"]} ({a["type"]}; default {a["default"]}): {a["description"]}\n'
         if s['code']:
             fence = '`' * max(3, max((len(m[0])+1 for m in re.finditer(r'`+', s['code'])), default=3))
             out += f'\n{fence}dart\n{s["code"]}\n{fence}\n'
-        for a in s['api']:
-            out += f'\n- {a["name"]} ({a["type"]}; default {a["default"]}): {a["description"]}\n'
         if s['note']:
             out += '\nNote: ' + s['note'] + '\n'
     return out
@@ -114,7 +114,14 @@ def create_pages(data):
     add('/examples', 'Flutter animation examples — NibMotion', 'Try interactive Flutter animation examples: springs, keyframes, drag gestures, layout, presence and scroll effects. Tune the motion and copy the Dart code.', 'MOTION', cards([r for r in data['recipes'] if r['gallery']]))
     for a in data['articles']:
         body = '<nav class="toc" aria-label="On this page">' + ''.join(link(a['route']+'#'+s['id'], s['heading']) for s in a['sections']) + '</nav>' + sections(a['sections'])
-        add(a['route'], a['title'] + ' — ' + {'motion':'NibMotion','components':'NibComponents','genui':'NibGenUI'}[a['packageId']], a['summary'], 'DOCUMENTATION', body, markdown_sections(a['sections']))
+        markdown = markdown_sections(a['sections'])
+        if a['packageId'] == 'motion':
+            source = data['motionDocsSource']
+            edit = f'https://github.com/oraclevs/nib_motion/edit/{source["edit_ref"]}/{a["source"]}'
+            provenance = f'nib_motion {source["version"]} · {source["channel"]} · source {source["commit"]}'
+            body = '<p>' + E(provenance) + ' · ' + link(edit, 'Edit this page on GitHub') + '</p>' + body
+            markdown = provenance + '\n\n[Edit this page on GitHub](' + edit + ')\n\n' + markdown
+        add(a['route'], a['title'] + ' — ' + {'motion':'NibMotion','components':'NibComponents','genui':'NibGenUI'}[a['packageId']], a['summary'], 'DOCUMENTATION', body, markdown)
     for g in data['components']:
         body = paras([g['summary']]) + '<p>' + link(g['docsRoute'], 'Read the full component guide and API') + '</p><h2>Public widgets and APIs</h2>' + listing([{'text': s} for s in g['symbols']]) + '<h2>Example Dart code</h2><pre><code class="language-dart">' + E(g['minimalCode']) + '</code></pre><h2>Playground controls</h2>'
         body += table(['Control', 'Type', 'Options or range', 'Help'], [[c['label'], c['kind'], ', '.join(c['choices']) if c['choices'] else (str(c['min'])+'–'+str(c['max']) if c['kind']=='number' else ''), c['help'] or ''] for c in g['controls']])
@@ -191,6 +198,9 @@ def main():
     if urlsplit(origin).scheme != 'https' or urlsplit(origin).path:
         parser.error('--origin must be an HTTPS origin without a path')
     production = args.mode == 'production'
+    provenance = json.loads((ROOT/'assets/reference/motion_docs_source.json').read_text())
+    if production and provenance['channel'] != 'stable':
+        raise RuntimeError('Next documentation cannot be deployed as stable production')
     data = json.loads((ROOT/'build/seo/content.json').read_text())
     output = ROOT/args.output
     if output.exists():
@@ -199,6 +209,7 @@ def main():
         shutil.rmtree(output)
     static = output/'static'
     shutil.copytree(ROOT/args.flutter_build, static)
+    shutil.copyfile(ROOT/'assets/reference/motion_docs_source.json', static/'motion-docs-source.json')
     # Source maps and compiler internals are not needed in a public deployment.
     for file in static.rglob('*.map'):
         file.unlink()

@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:nib_ember_living/content/motion_foundations_guides.dart';
+import 'package:nib_ember_living/content/motion_guides.dart';
 import 'package:nib_ember_living/content/site_content.dart';
 import 'package:nib_ember_living/recipes/recipe_catalog.dart';
 import 'package:nib_ember_living/recipes/recipe_export.dart';
@@ -49,7 +49,7 @@ void main() {
       'lib/components/component_toggle.dart',
       'lib/recipes/recipe_export.dart',
       'lib/recipes/recipe_catalog.dart',
-      'lib/content/motion_foundations_guides.dart',
+      'lib/content/motion_guides.dart',
       'test/recipes/export_consumer_test.dart',
     ];
     final inputHashes = await Process.run(
@@ -213,7 +213,7 @@ flutter:
           );
         }
       }
-      final springGuide = motionFoundationsGuides.firstWhere(
+      final springGuide = detailedMotionGuides.firstWhere(
         (article) => article.id == 'springs',
       );
       final springCode = springGuide.sections

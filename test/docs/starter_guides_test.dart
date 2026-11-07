@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nib_ember_living/content/site_content.dart';
+import 'package:nib_ember_living/content/motion_guides.dart';
 import 'package:nib_ember_living/docs/doc_example_catalog.dart';
 import 'package:nib_ember_living/pages/docs_page.dart';
 import 'package:nib_motion/nib_motion.dart';
@@ -11,6 +12,40 @@ import 'package:nib_motion/nib_motion.dart';
 import '../support/file_asset_bundle.dart';
 
 void main() {
+  testWidgets('canonical source metadata fits desktop and mobile guides', (
+    tester,
+  ) async {
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    for (final width in [390.0, 1440.0]) {
+      tester.view.physicalSize = Size(width, 900);
+      await tester.pumpWidget(
+        DefaultAssetBundle(
+          bundle: FileAssetBundle(),
+          child: MaterialApp(
+            home: Scaffold(
+              body: DocsPage(
+                key: ValueKey(width),
+                packageId: 'motion',
+                sectionId: 'introduction',
+                onNavigate: (_) {},
+              ),
+            ),
+          ),
+        ),
+      );
+      await tester.pump(const Duration(milliseconds: 600));
+      expect(
+        find.text(
+          'nib_motion $motionDocsVersion · $motionDocsChannel · ${motionDocsCommit.substring(0, 7)}',
+        ),
+        findsOneWidget,
+      );
+      expect(find.text('Edit this page on GitHub'), findsOneWidget);
+      expect(tester.takeException(), isNull);
+    }
+  });
+
   testWidgets(
     'introduction and installation have no preview or motion toolbar',
     (tester) async {

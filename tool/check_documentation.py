@@ -2,7 +2,7 @@
 """Validate exported website guides against the reviewed hosted Motion source.
 
 Run export_site_content_test.dart and generate_api_reference.dart --check first.
-This checks contracts; it never replaces human-authored guides with package docs.
+Checks the imported canonical guides, website presentation and release contract.
 """
 import hashlib
 import json
@@ -73,6 +73,14 @@ def main():
     reference = json.loads((ROOT / 'assets/reference/public_api.json').read_text())
     contract = json.loads((ROOT / 'tool/motion_release_contract.json').read_text())
     errors = content_errors(data, reference)
+    provenance = json.loads((ROOT / 'tool/motion_docs.lock.json').read_text())
+    expected_source = {'commit': provenance['commit'], 'version': provenance['package_version'], 'channel': provenance['channel'], 'edit_ref': provenance['edit_ref']}
+    if data.get('motionDocsSource') != expected_source:
+        errors.append('Exported documentation source differs from the canonical lock')
+    mappings = json.loads((ROOT / 'tool/motion_docs_routes.json').read_text())['guides']
+    actual = {(a['id'], a['route'], a.get('source')) for a in data['articles'] if a['packageId'] == 'motion'}
+    if actual != {(g['id'], g['route'], g['source']) for g in mappings}:
+        errors.append('Canonical source-to-route coverage differs from the export')
     if data['motionVersion'] != contract['version']:
         errors.append('Website version differs from reviewed hosted release')
     source = ROOT.parent / 'MotionNib/motion'
