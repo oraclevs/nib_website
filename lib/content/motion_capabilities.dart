@@ -1,11 +1,11 @@
 import 'site_content.dart';
 
-// Reviewed against the hosted archive; the showcase candidate is not a release.
+// Guide examples are still checked against the 0.3.5 archive.
 const motionPublishedVersion = '0.3.5';
-const motionPendingVersion = '0.3.6';
+const motionLatestVersion = '0.3.6';
 const motionReleaseNote =
-    'These guides target nib_motion $motionPublishedVersion on pub.dev. '
-    '$motionPendingVersion is pending review and is not published. '
+    'These guides were checked against nib_motion $motionPublishedVersion. '
+    'Version $motionLatestVersion is published on pub.dev. '
     'Shader rendering needs checks on your target device.';
 
 const motionCapabilities = <DocSection>[

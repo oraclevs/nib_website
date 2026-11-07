@@ -22,7 +22,7 @@ If this environment cannot establish Flutter's debug WebSocket, build and serve 
 python3 -m http.server 8123 --directory build/web
 ```
 
-The website resolves Nib packages from sibling repositories. Motion implementation files are checked against the published 0.3.5 archive; 0.3.6 remains a separate review candidate. GenUI remains unpublished. Production deployment requires owner approval.
+The website resolves Nib packages from sibling repositories. Its Motion guides and implementation checks still target the published 0.3.5 archive. NibMotion 0.3.6 is also published; update the release contract and verify its archive before treating the guides as 0.3.6 examples. GenUI remains unpublished. Production deployment requires owner approval.
 
 ## Checks
 
