@@ -20,7 +20,8 @@ void main() {
       }
       expect(SiteContent.articlesFor('motion'), hasLength(35));
       expect(motionPublishedVersion, '0.3.5');
-      expect(motionPendingVersion, '0.3.6');
+      expect(motionLatestVersion, '0.3.6');
+      expect(motionReleaseNote, contains('0.3.6 is published'));
     },
   );
 

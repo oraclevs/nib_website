@@ -194,12 +194,12 @@ const motionWorkflowGuides = <DocArticle>[
         id: 'applications',
         heading: 'Explore the complete example application',
         paragraphs: [
-          'The separate official gallery candidate exposes 29 examples: the original 21 demos, Daily Focus, two quick starts and five additional examples. It is review work for 0.3.6, not a published 0.3.5 gallery. Its README includes local launch instructions. Promotional recordings remain subject to owner approval.',
+          'The NibMotion gallery includes 29 examples: the original 21 demos, Daily Focus, two quick starts and five additional examples. It is included with the published 0.3.6 release. Its README has local launch instructions.',
         ],
         blocks: [
           DocLink(
             'Review the 29-example gallery and launch instructions',
-            'https://github.com/oraclevs/nib_motion/blob/feat/interactive-showcase-0.3.6/example/README.md',
+            'https://github.com/oraclevs/nib_motion/blob/v0.3.6/example/README.md',
           ),
         ],
       ),
